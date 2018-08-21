@@ -5,8 +5,9 @@ import uuid
 from selenium import webdriver
 
 
+
 class WebDriverWrapper:
-    def __init__(self):
+    def __init__(self, width, height):
         chrome_options = webdriver.ChromeOptions()
         self._tmp_folder = '/tmp/{}'.format(uuid.uuid4())
 
@@ -25,7 +26,7 @@ class WebDriverWrapper:
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-gpu')
-        chrome_options.add_argument('--window-size=1280x1696')
+        chrome_options.add_argument('--window-size={}x{}'.format(width, height))
         chrome_options.add_argument('--user-data-dir={}'.format(self._tmp_folder + '/user-data'))
         chrome_options.add_argument('--hide-scrollbars')
         chrome_options.add_argument('--enable-logging')
@@ -74,3 +75,12 @@ class WebDriverWrapper:
                     os.unlink(file_path)
             except Exception as e:
                 print(e)
+
+    def execute_script(self, script):
+        return self._driver.execute_script(script)
+
+    def get_driver(self):
+        return self._driver
+
+    def page_source(self):
+        return self._driver.page_source
