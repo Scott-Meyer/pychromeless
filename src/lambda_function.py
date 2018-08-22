@@ -14,9 +14,9 @@ def lambda_handler(event, context):
     # Log the input
     logger.info('got event{}'.format(event))
 
-    url = event['queryStringParameters']['url']
-    width = int(event['queryStringParameters']['width'])
-    height = int(event['queryStringParameters']['height'])
+    url = event['url']
+    width = int(event['width'])
+    height = int(event['height'])
     page_source = ProcessUrl(url, width, height)
 
     return {
